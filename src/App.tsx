@@ -1,41 +1,47 @@
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-import "./App.css";
-import { Button } from "react-bootstrap";
-import { useState } from "react";
 import "bootstrap/scss/bootstrap.scss";
+import "./App.css";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { useState } from "react";
+import {motion} from 'framer-motion';
+
+const MotionCol = motion(Col);
 
 const App = () => {
   const [isVisiblePanel, setVisiblePanel] = useState(false);
   const handleVisible = () => {
     setVisiblePanel((visible) => !visible);
   };
-  
+
   return (
-    <PanelGroup direction="horizontal">
+    <Container>
       <Button onClick={handleVisible} className="panel-toggle" size="sm">
         {isVisiblePanel ? "Hide panel" : "Show"}
       </Button>
-      <Panel 
-      defaultSizePercentage={50}
-      className="content pt-5">
-        <h1>Content</h1>
-      </Panel>
+      <Row>
+        <MotionCol 
+        
+        className="content pt-5">
+          <h1>Content</h1>
+        </MotionCol>
 
-      {/* Раскоментируй код ниже */}
+        {/* Раскоментируй код ниже */}
 
-      {/* {isVisiblePanel && ( */}
-        <>
-          <PanelResizeHandle
-            className={`divider ${isVisiblePanel && "visibled"}`}
-          />
-          <Panel
-            className={`sidebar pt-5 ${isVisiblePanel && "visibled"}`}
-          >
-            <h1>Sidebar</h1>
-          </Panel>
-        </>
-      {/* )} */}
-    </PanelGroup>
+        {isVisiblePanel && (
+          <>
+            <MotionCol 
+              initial={{
+                x: '100%'
+              }}
+              animate={{
+                x: 0
+              }}
+            className={`sidebar pt-5 ${isVisiblePanel && "visibled"}`}>
+              <h1>Sidebar</h1>
+            </MotionCol>
+          </>
+        )}
+      </Row>
+    </Container>
   );
 };
 
